@@ -5,6 +5,10 @@ import { IsOptional, IsString, IsBoolean } from 'class-validator';
 export class CreateContentDto {
   @Field()
   @IsString()
+  id: string; // UUID
+
+  @Field()
+  @IsString()
   title: string;
 
   @Field({ nullable: true })

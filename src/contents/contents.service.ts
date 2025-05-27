@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
-import { PaginationDto } from './dto/pagination.dto';
 import { Content } from './entities/content.entity';
 import { User } from '../users/entities/user.entity';
 
@@ -35,18 +34,13 @@ export class ContentsService {
 
 
   // FIND ALL
-  async findAllContent(paginationDto: PaginationDto): Promise<{}> {
+  async findAllContent(): Promise<Content[]> {
     try {
-
-      const [data, total] = await this.contentRepo.findAndCount({
+      const resp = await this.contentRepo.find({
         relations: ['user'],
-        
-        skip: paginationDto.skip,
-        take: paginationDto.limit,
-        order: { createdAt: 'DESC' },
+        order: { id: 'DESC' },
       });
-
-      return { data, total};
+      return resp;
     } catch (error) {
       throw new InternalServerErrorException(`Failed to fetch contents: ${error.message}`);
     }

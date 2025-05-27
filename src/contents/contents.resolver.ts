@@ -9,7 +9,6 @@ import { Content } from './entities/content.entity';
 import { ContentsService } from './contents.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
-import { PaginationDto } from './dto/pagination.dto';
 
 
 
@@ -28,8 +27,8 @@ export class ContentsResolver {
 
 
   // FIND ALL
-  @Get()
-  findAllContent(@Query() paginationDto: PaginationDto): Promise<paginationDto> {
+  @Query(() => [Content])
+  findAllContent() {
     return this.contentsService.findAllContent();
   }
 
@@ -42,7 +41,7 @@ export class ContentsResolver {
   }
 
 
-  // UPDATE
+
   @Mutation(() => Content)
   updateContent(
     @Args('id') id: string,
