@@ -1,0 +1,24 @@
+type Content {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateContentInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateContentInput {
+  id: Int!
+}
+
+type Query {
+  contents: [Content]!
+  content(id: Int!): Content
+}
+
+type Mutation {
+  createContent(createContentInput: CreateContentInput!): Content!
+  updateContent(updateContentInput: UpdateContentInput!): Content!
+  removeContent(id: Int!): Content
+}

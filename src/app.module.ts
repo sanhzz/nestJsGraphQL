@@ -8,9 +8,11 @@ import { PassportModule } from '@nestjs/passport';
 
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { ContentsModule } from './contents/contents.module';
 import { User } from './users/entities/user.entity';
 import { Profile } from './users/entities/profile.entity';
 import { DateTimeScalar } from './common/scalars/date.scalar';
+import { Content } from './contents/entities/content.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,11 @@ import { DateTimeScalar } from './common/scalars/date.scalar';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get('DATABASE_URL'),
-        entities: [User, Profile],
+        entities: [
+          User, 
+          Profile, 
+          Content
+        ],
         synchronize: process.env.NODE_ENV !== 'production',
         ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
       }),
@@ -47,7 +53,8 @@ import { DateTimeScalar } from './common/scalars/date.scalar';
     }),
     AuthModule,
     UsersModule,
+    ContentsModule
   ],
   providers: [DateTimeScalar],
 })
-export class AppModule {}
+export class AppModule { }
