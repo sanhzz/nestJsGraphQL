@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Serverless NestJS GraphQL Backend with PostgreSQL and Advanced Auth",
   "scripts": {
-    "build": "nest build",
+    "build": "rm -rf dist && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

@@ -38,6 +38,7 @@ export class Profile {
   @JoinColumn()
   user: User;
 
+  @Field()
   @Column()
   userId: string;
 

@@ -1,0 +1,25 @@
+*Generate a new CRUD resource 
+nest g resource bannners
+
+*Generate each part manually:
+nest g module products
+nest g controller products
+nest g service products
+nest g service prisma 
+nest g module prisma
+
+
+
+*how to build project
+Clean old dist
+Create new dist
+JSON
+"scripts": {
+  "build": "nest build",❌
+  "build": "rimraf dist && nest build",✅
+  "start:prod": "node dist/main",
+}
+
+yarn build
+yarn start:prod
+

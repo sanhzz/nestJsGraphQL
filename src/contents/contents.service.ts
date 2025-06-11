@@ -5,7 +5,8 @@ import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { Content } from './entities/content.entity';
 import { User } from '../users/entities/user.entity';
-
+import { PaginationInput } from '../pagination/pagination.input';
+import { ILike , Like} from 'typeorm';
 import { NotFoundException, InternalServerErrorException } from '@nestjs/common';
 
 @Injectable()
@@ -33,14 +34,39 @@ export class ContentsService {
   }
 
 
+  // // // FIND ALL
+  // // async findAllContent(): Promise<Content[]> {
+  // //   try {
+  // //     const resp = await this.contentRepo.find({
+  // //       relations: ['user'],
+  // //       order: { id: 'DESC' },
+  // //     });
+  // //     return resp;
+  // //   } catch (error) {
+  // //     throw new InternalServerErrorException(`Failed to fetch contents: ${error.message}`);
+  // //   }
+  // // }
   // FIND ALL
-  async findAllContent(): Promise<Content[]> {
+  async findAllContent(page: PaginationInput): Promise<{ row: Content[]; count: number }> {
     try {
-      const resp = await this.contentRepo.find({
-        relations: ['user'],
+      const whereCondition = page.search
+        ? {
+          user: {
+            profile: {
+              firstName: ILike(`%${page.search}%`)
+            }
+          }
+        }
+        : {};
+
+      const [row, count] = await this.contentRepo.findAndCount({
+        relations: ['user', 'user.profile'],
+        where: whereCondition,
         order: { id: 'DESC' },
+        skip: page.page,
+        take: page.size,
       });
-      return resp;
+      return { row, count };
     } catch (error) {
       throw new InternalServerErrorException(`Failed to fetch contents: ${error.message}`);
     }

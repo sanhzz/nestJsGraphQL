@@ -3,9 +3,9 @@ import { IsOptional, IsString, IsBoolean } from 'class-validator';
 
 @InputType()
 export class CreateContentDto {
-  @Field()
-  @IsString()
-  id: string; // UUID
+  // @Field()
+  // @IsString()
+  // id: string; // UUID
 
   @Field()
   @IsString()
